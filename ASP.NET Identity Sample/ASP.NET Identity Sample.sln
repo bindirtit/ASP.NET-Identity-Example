@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.30723.0
+VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ASP.NET Identity Sample", "ASP.NET Identity Sample\ASP.NET Identity Sample.csproj", "{809ABD9F-AC66-42C4-80CD-87BF273F3AA0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Users Identity", "Users Identity\Users Identity.csproj", "{00EAFAB0-7AFF-444D-89DB-BDAC53412122}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{809ABD9F-AC66-42C4-80CD-87BF273F3AA0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{809ABD9F-AC66-42C4-80CD-87BF273F3AA0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{809ABD9F-AC66-42C4-80CD-87BF273F3AA0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{00EAFAB0-7AFF-444D-89DB-BDAC53412122}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{00EAFAB0-7AFF-444D-89DB-BDAC53412122}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{00EAFAB0-7AFF-444D-89DB-BDAC53412122}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{00EAFAB0-7AFF-444D-89DB-BDAC53412122}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
