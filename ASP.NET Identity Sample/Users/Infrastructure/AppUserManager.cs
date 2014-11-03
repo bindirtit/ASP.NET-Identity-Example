@@ -13,9 +13,9 @@ namespace Users.Infrastructure
     public class AppUserManager : UserManager<AppUser>
     {
         public AppUserManager(IUserStore<AppUser> store)
-            :base(store)
+            : base(store)
         {
-            
+
         }
 
         public static AppUserManager Create(IdentityFactoryOptions<AppUserManager> options,
@@ -23,6 +23,37 @@ namespace Users.Infrastructure
         {
             AppIdentityDbContext db = context.Get<AppIdentityDbContext>();
             AppUserManager manager = new AppUserManager(new UserStore<AppUser>(db));
+
+            //manager.PasswordValidator = new PasswordValidator()
+            //{
+            //    RequiredLength = 6,
+            //    RequireNonLetterOrDigit = false,
+            //    RequireDigit = false,
+            //    RequireLowercase = true,
+            //    RequireUppercase = true
+            //};
+
+            //manager.PasswordValidator = new CustomPasswordValidator
+            //{
+            //    RequiredLength = 6,
+            //    RequireNonLetterOrDigit = false,
+            //    RequireDigit = false,
+            //    RequireLowercase = true,
+            //    RequireUppercase = true
+            //};
+
+            //manager.UserValidator = new UserValidator<AppUser>(manager)
+            //{
+            //    AllowOnlyAlphanumericUserNames = true,
+            //    RequireUniqueEmail = true
+            //};
+
+            manager.UserValidator = new CustomUserValidator(manager)
+            {
+                AllowOnlyAlphanumericUserNames = true,
+                RequireUniqueEmail = true
+            };
+
             return manager;
         }
     }

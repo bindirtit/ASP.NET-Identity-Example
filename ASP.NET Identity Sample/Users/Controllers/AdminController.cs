@@ -37,7 +37,7 @@ namespace Users.Controllers
                 };
 
                 IdentityResult result = await UserManager.CreateAsync(
-                    user:user, 
+                    user: user, 
                     password: model.Password);
 
                 if (result.Succeeded)
