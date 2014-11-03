@@ -37,7 +37,7 @@ namespace Users.Controllers
                 };
 
                 IdentityResult result = await UserManager.CreateAsync(
-                    user: user, 
+                    user: user,
                     password: model.Password);
 
                 if (result.Succeeded)
@@ -49,7 +49,7 @@ namespace Users.Controllers
                     AddErrorsFromResult(result);
                 }
             }
-            
+
             return View(model);
         }
 
@@ -59,6 +59,91 @@ namespace Users.Controllers
             {
                 this.ModelState.AddModelError("", error);
             }
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> Delete(string id)
+        {
+            AppUser user = await UserManager.FindByIdAsync(id);
+            if (user != null)
+            {
+                IdentityResult result = await UserManager.DeleteAsync(user);
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    return View("Error", result.Errors);
+                }
+            }
+            else
+            {
+                return View("Error", new string[] { "User not found" });
+            }
+        }
+
+        public async Task<ActionResult> Edit(string id)
+        {
+            AppUser user = await UserManager.FindByIdAsync(id);
+            if (user != null)
+            {
+                return View(user);
+            }
+            else
+            {
+                return RedirectToAction("Index");
+            }
+
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> Edit(string id, string email, string password)
+        {
+            AppUser user = await UserManager.FindByIdAsync(id);
+            if (user != null)
+            {
+                user.Email = email;
+                IdentityResult validEmail = await UserManager.UserValidator.ValidateAsync(user);
+                if (!validEmail.Succeeded)
+                {
+                    this.AddErrorsFromResult(validEmail);
+                }
+
+                IdentityResult validPassword = null;
+                if (!string.IsNullOrEmpty(password))
+                {
+                    validPassword = await UserManager.PasswordValidator.ValidateAsync(item: password);
+                    if (!validPassword.Succeeded)
+                    {
+                        this.AddErrorsFromResult(validPassword);
+                    }
+                    else
+                    {
+                        user.PasswordHash = UserManager.PasswordHasher.HashPassword(password: password);
+                    }
+                }
+
+                if ((validEmail.Succeeded && validPassword == null) || 
+                    (validEmail.Succeeded && password != string.Empty && validPassword.Succeeded))
+                {
+                    IdentityResult result = await UserManager.UpdateAsync(user);
+                    if (result.Succeeded)
+                    {
+                        return RedirectToAction("Index");
+                    }
+                    else
+                    {
+                        AddErrorsFromResult(result);
+                    }
+                }
+            }
+            else
+            {
+                this.ModelState.AddModelError("", "User not found.");
+            }
+
+            return View(user);
         }
 
         private AppUserManager UserManager
